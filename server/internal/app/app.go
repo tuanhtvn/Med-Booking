@@ -2,7 +2,9 @@ package app
 
 import (
 	"server/internal/configs"
+	"server/internal/middlewares"
 	"server/internal/routes"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,14 +15,21 @@ type Module interface {
 
 type Application struct {
 	Config *configs.Config
-
-	route *gin.Engine
+	route  *gin.Engine
 }
 
 func NewApplication(config *configs.Config) *Application {
 
 	// Initialize the Gin router
 	r := gin.Default()
+	timeCheck, _ := strconv.Atoi(config.Server.RateTimeCheck)
+	go middlewares.CleanupClient(timeCheck)
+
+	requestRate, _ := strconv.Atoi(config.Server.RateRequest)
+	brustRate, _ := strconv.Atoi(configs.NewConfig().Server.RateBrust)
+
+	r.Use(middlewares.RateLimitingMiddleware(requestRate, brustRate), middlewares.LoggerMiddleware())
+
 	modules := []Module{
 		NewUserModule(),
 	}
@@ -43,7 +52,7 @@ func (app *Application) Run() error {
 	// 	return err
 	// }
 	// log.Printf("Database connection established")
-	
+
 	return app.route.Run(":" + app.Config.Server.Port)
 }
 
