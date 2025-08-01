@@ -28,7 +28,7 @@ func NewApplication(config *configs.Config) *Application {
 	requestRate, _ := strconv.Atoi(config.Server.RateRequest)
 	brustRate, _ := strconv.Atoi(configs.NewConfig().Server.RateBrust)
 
-	r.Use(middlewares.RateLimitingMiddleware(requestRate, brustRate), middlewares.LoggerMiddleware())
+	r.Use(middlewares.LoggerMiddleware(), middlewares.RateLimitingMiddleware(requestRate, brustRate))
 
 	modules := []Module{
 		NewUserModule(),
