@@ -14,8 +14,9 @@ type Module interface {
 }
 
 type Application struct {
-	Config *configs.Config
-	route  *gin.Engine
+	config  *configs.Config
+	route   *gin.Engine
+	modules []Module
 }
 
 func NewApplication(config *configs.Config) *Application {
@@ -37,8 +38,9 @@ func NewApplication(config *configs.Config) *Application {
 	routes.RegisterRoute(r, getModuleRoutes(modules)...)
 
 	return &Application{
-		Config: config,
-		route:  r,
+		config:  config,
+		route:   r,
+		modules: modules,
 	}
 }
 
@@ -53,7 +55,7 @@ func (app *Application) Run() error {
 	// }
 	// log.Printf("Database connection established")
 
-	return app.route.Run(":" + app.Config.Server.Port)
+	return app.route.Run(":" + app.config.Server.Port)
 }
 
 func getModuleRoutes(modules []Module) []routes.Route {
