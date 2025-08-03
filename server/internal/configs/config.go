@@ -22,7 +22,7 @@ type Config struct {
 func NewConfig() *Config {
 	return &Config{
 		Server: ServerConfig{
-			Port:          utils.GetEnv("APP_PORT", "8080"),
+			Port:          utils.GetEnv("APP_PORT", ":8080"),
 			Environment:   utils.GetEnv("APP_ENV", "development"),
 			Debug:         utils.GetEnv("APP_DEBUG", "false") == "true",
 			ConnString:    utils.GetEnv("CONN_STRING", ""),
