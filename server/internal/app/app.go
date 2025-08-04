@@ -2,12 +2,12 @@ package app
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"server/internal/configs"
+	"server/internal/init/db"
 	"server/internal/middlewares"
 	"server/internal/routes"
 	"server/internal/validation"
@@ -16,9 +16,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
 type Module interface {
@@ -37,6 +34,14 @@ func NewApplication(config *configs.Config) *Application {
 
 	// Initialize the Gin router
 	r := gin.Default()
+	
+	// Initialize Database postgres
+	connStr := config.Server.ConnString
+
+	if err := db.InitDBPostGres(connStr); err != nil {
+		log.Fatal("unable to connect to db")
+	}
+
 	timeCheck, _ := strconv.Atoi(config.Server.RateTimeCheck)
 	go middlewares.CleanupClient(timeCheck)
 
@@ -46,7 +51,7 @@ func NewApplication(config *configs.Config) *Application {
 	r.Use(middlewares.LoggerMiddleware(), middlewares.RateLimitingMiddleware(requestRate, brustRate))
 
 	modules := []Module{
-		NewUserModule(),
+		NewUserModule(db.DBPostGres),
 	}
 
 	routes.RegisterRoute(r, getModuleRoutes(modules)...)
@@ -59,38 +64,6 @@ func NewApplication(config *configs.Config) *Application {
 }
 
 func (app *Application) Run() error {
-	connStr := app.config.Server.ConnString
-
-	config := &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info),
-	}
-
-	DB, _ := gorm.Open(
-		postgres.New(postgres.Config{
-			DSN: connStr,
-		}), config)
-
-	sqlDB, err := DB.DB()
-
-	if err != nil {
-		return fmt.Errorf("error getting sql.DB: %w", err)
-	}
-
-	sqlDB.SetMaxOpenConns(50)
-	sqlDB.SetMaxIdleConns(10)
-	sqlDB.SetConnMaxLifetime(30 * time.Minute)
-	sqlDB.SetConnMaxIdleTime(5 * time.Minute)
-
-	ctx1, cancel1 := context.WithTimeout(context.Background(), 5*time.Second)
-
-	defer cancel1()
-
-	if err := sqlDB.PingContext(ctx1); err != nil {
-		sqlDB.Close()
-		return fmt.Errorf("⛔️ error DB ping: %w", err)
-	}
-	log.Printf("✅ Database connection established")
-
 	srv := &http.Server{
 		Addr:    app.config.Server.Port,
 		Handler: app.route,
@@ -111,10 +84,10 @@ func (app *Application) Run() error {
 	<-quit
 	log.Println("⛔️ Shutdown signal received ...")
 
-	ctx2, cancel2 := context.WithTimeout(context.Background(), 15*time.Second)
-	defer cancel2()
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
 
-	if err := srv.Shutdown(ctx2); err != nil {
+	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatalf("🚀 Server forced to shutdown: %v", err)
 	}
 
