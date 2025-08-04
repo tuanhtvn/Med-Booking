@@ -6,6 +6,6 @@ type UserService interface {
 	GetAllUsers() ([]models.User, error)
 	CreateUser(user *models.User) error
 	GetUserByID(id int) (*models.User, error)
-	UpdateUser()
-	DeleteUser()
+	UpdateUser(id int, user *models.User) error
+	DeleteUser(id int) error
 }

@@ -43,10 +43,27 @@ func (ur *userRepository) FindByID(id int) (*models.User, error) {
 	return &data, nil
 }
 
-func (ur *userRepository) Update() {
+func (ur *userRepository) Update(user *models.User) error {
+	log.Println("Run repository update user")
+	if err := ur.db.Save(user).Error; err != nil {
+		return fmt.Errorf("failed to update user: %w", err)
+	}
+	return nil
 
 }
 
-func (ur *userRepository) Delete() {
+func (ur *userRepository) Delete(user *models.User) error {
+	log.Println("Run repository delete user")
+	if err := ur.db.Delete(user).Error; err != nil {
+		return fmt.Errorf("failed to delete user: %w", err)
+	}
+	return nil
+}
 
+func (ur *userRepository) FindByEmail(email string) (*models.User, error) {
+	var user models.User
+	if err := ur.db.Where("email = ?", email).First(&user).Error; err != nil {
+		return nil, fmt.Errorf("failed to find user by email: %w", err)
+	}
+	return &user, nil
 }
