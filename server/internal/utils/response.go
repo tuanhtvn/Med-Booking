@@ -7,6 +7,7 @@ import (
 )
 
 func ResponseError(ctx *gin.Context, err error) {
+	// If the error is an AppError, return a structured error response
 	if appErr, ok := err.(*AppError); ok {
 		status := HttpStatusFromCode(appErr.Code)
 		response := gin.H{
@@ -21,6 +22,7 @@ func ResponseError(ctx *gin.Context, err error) {
 		ctx.JSON(status, response)
 		return
 	}
+	// For other errors, return a generic internal server error
 	ctx.JSON(http.StatusInternalServerError, gin.H{
 		"error": err.Error(),
 		"code":  ErrCodeInternal,
@@ -32,4 +34,8 @@ func ResponseSuccess(ctx *gin.Context, statusCode int, data any) {
 		"status": "success",
 		"data":   data,
 	})
+}
+
+func ResponseValidator(ctx *gin.Context, data any) {
+	ctx.JSON(http.StatusBadRequest, data)
 }
