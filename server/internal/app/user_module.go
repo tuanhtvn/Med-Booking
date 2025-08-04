@@ -5,15 +5,17 @@ import (
 	"server/internal/repositories"
 	"server/internal/routes"
 	"server/internal/services"
+
+	"gorm.io/gorm"
 )
 
 type UserModule struct {
 	route routes.Route
 }
 
-func NewUserModule() *UserModule {
+func NewUserModule(db *gorm.DB) *UserModule {
 	// repository
-	repo := repositories.NewUserRepository()
+	repo := repositories.NewUserRepository(db)
 	// service
 	service := services.NewUserService(repo)
 	// handler
