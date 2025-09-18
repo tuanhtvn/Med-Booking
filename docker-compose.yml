@@ -1,0 +1,39 @@
+version: "3.8"
+
+#SERVICES
+services:
+  # BACKEND
+  java-springboot:
+    environment:
+      - CLIENT_URL=${CLIENT_URL}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_HOST=${DB_HOST}
+      - DB_APP_NAME=${DB_APP_NAME}
+      - DB_NAME=${DB_NAME}
+      - SEEDER=${SEEDER}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - JWT_EXPIRES_TIME=${JWT_EXPIRES_TIME}
+      - COOKIE_EXPIRES_TIME=${COOKIE_EXPIRES_TIME}
+      - SERVER_PORT=${SERVER_PORT}
+      - CLIENT_PORT=${CLIENT_PORT}
+      - CONN_STRING=${CONN_STRING}
+    container_name: Backend
+    build:
+      context: ./server/medical
+    volumes:
+      - ./server/medical:/app
+  # FRONTEND
+  nginx-frontend:
+    container_name: Frontend
+    build:
+      context: ./client/medical
+    depends_on:
+      - java-springboot
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./client/medical:/app
+      - /app/node_modules
