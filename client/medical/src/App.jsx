@@ -1,35 +1,107 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {
+  useLocation,
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
+import Header from "./components/layouts/header";
+import Footer from "./components/layouts/footer";
+import Home from "./components/home";
+import Login from "./components/users/login";
+import Register from "./components/users/register";
+import ForgotPassword from "./components/users/forgotPassword";
+import UpdatePassword from "./components/users/updatePassword";
+import ProtectedRoute from "./routes/protectedRoute";
+import List from "./components/records/list";
+import Booking from "./components/books/booking";
+import Ticket from "./components/tickets/ticket";
 
 function App() {
-  const [count, setCount] = useState(0)
+  return (
+    <Router>
+      <div className="App">
+        <AppContent />
+      </div>
+    </Router>
+  );
+}
+function AppContent() {
+  const location = useLocation();
+
+  const isHome =
+    location.pathname === "/" || location.pathname.startsWith("/search");
+
+  const isRecord = location.pathname.startsWith("/me/records");
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <Header isHome={isHome} isRecord={isRecord} />
+      <div className="container container-fluid">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/search/:keyword"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/update-password"
+            element={
+              <ProtectedRoute>
+                <UpdatePassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/me/records"
+            element={
+              <ProtectedRoute>
+                <List />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/book/:doctor"
+            element={
+              <ProtectedRoute>
+                <Booking />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/me/records/:keyword"
+            element={
+              <ProtectedRoute>
+                <List />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/me/tickets"
+            element={
+              <ProtectedRoute>
+                <Ticket />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

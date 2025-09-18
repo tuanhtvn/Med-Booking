@@ -1,0 +1,179 @@
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import {
+  Grid,
+  Paper,
+  Avatar,
+  TextField,
+  IconButton,
+  Button,
+  Typography,
+} from "@mui/material";
+import { Visibility, VisibilityOff, AccountCircle } from "@mui/icons-material";
+
+import MetaData from "../layouts/metadata";
+import Loader from "../layouts/loader";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { useDispatch, useSelector } from "react-redux";
+
+import { login, clearErrors } from "../../actions/userAction";
+import { emailRegex } from "../../utils/regex";
+
+const Login = () => {
+  document.body.style.backgroundColor = "#ccc";
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const { isAuthenticated, error, loading } = useSelector(
+    (state) => state.auth
+  );
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordEntered, setPasswordEntered] = useState(false);
+
+  const handleEmailChange = (event) => {
+    const { value } = event.target;
+    setEmail(value);
+    if (!emailRegex.test(email)) {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handlePasswordChange = (event) => {
+    const { value } = event.target;
+    setPasswordEntered(value !== "");
+    setPassword(value);
+  };
+
+  let redirect = location.search ? location.search.split("=")[1] : "/";
+
+  useEffect(() => {
+    if (email === "") {
+      setEmailError(false);
+    }
+    if (isAuthenticated) {
+      navigate(redirect);
+    }
+
+    if (error) {
+      toast.error(error, {
+        position: "top-right",
+      });
+      dispatch(clearErrors());
+    }
+  }, [dispatch, email, toast, isAuthenticated, error, navigate]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (!emailRegex.test(email)) {
+      setEmailError(true);
+      if (email === "") {
+        toast.error("Vui lòng nhập địa chỉ email", {
+          position: "top-right",
+        });
+      }
+      return;
+    } else {
+      setEmailError(false);
+    }
+    if (password === "") {
+      toast.error("Vui lòng nhập mật khẩu", {
+        position: "top-right",
+      });
+      return;
+    }
+    dispatch(login(email, password));
+  };
+
+  return (
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <MetaData title={"Đăng nhập"} />
+
+          <Grid className="mt-5">
+            <form onSubmit={submitHandler}>
+              <Paper elevation={15} className="paper">
+                <Grid align="center">
+                  <Avatar className="avatar">
+                    <AccountCircle />
+                  </Avatar>
+                  <p className="text_login">ĐĂNG NHẬP</p>
+                </Grid>
+                <TextField
+                  type="email"
+                  label="Email"
+                  placeholder="Nhập địa chỉ email"
+                  fullWidth
+                  value={email}
+                  className="mb-3"
+                  onChange={handleEmailChange}
+                  error={emailError}
+                  helperText={emailError ? "Email không hợp lệ" : ""}
+                />
+                <TextField
+                  label="Mật khẩu"
+                  placeholder="Nhập mật khẩu"
+                  type={showPassword ? "text" : "password"}
+                  fullWidth
+                  value={password}
+                  onChange={handlePasswordChange}
+                  InputProps={
+                    passwordEntered
+                      ? {
+                          endAdornment: (
+                            <IconButton onClick={handleClickShowPassword}>
+                              {showPassword ? (
+                                <Visibility />
+                              ) : (
+                                <VisibilityOff />
+                              )}
+                            </IconButton>
+                          ),
+                        }
+                      : {}
+                  }
+                  className="mb-3"
+                />
+                <Button
+                  type="submit"
+                  id="login_btn"
+                  onClick={submitHandler}
+                  fullWidth
+                  className="mb-3"
+                >
+                  Đăng nhập
+                </Button>
+                <Typography>
+                  <Link to="/forgot-password">Quên mật khẩu?</Link>
+                </Typography>
+                <Typography className="mb-3 typographyColor">
+                  {" "}
+                  Bạn chưa có tài khoản? <Link to="/register">Đăng ký</Link>
+                </Typography>
+              </Paper>
+            </form>
+          </Grid>
+          <ToastContainer autoClose={2000} />
+        </>
+      )}
+    </>
+  );
+};
+
+export default Login;
