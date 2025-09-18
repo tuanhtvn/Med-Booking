@@ -1,0 +1,482 @@
+[
+  {
+    "fullname": "Nguyễn Văn A",
+    "title": "ThS",
+    "gender": "Nam",
+    "specialist": "Khoa Nội",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 10"
+      }
+    ]
+  },
+  {
+    "fullname": "Trần Thị B",
+    "title": "CKI",
+    "gender": "Nữ",
+    "specialist": "Khoa Nội",
+    "schedule": [
+      {
+        "date": "2023-12-09",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-10",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-11",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-12",
+        "clinic": "Phòng 11"
+      }
+    ]
+  },
+  {
+    "fullname": "Phạm Văn C",
+    "title": "CKII",
+    "gender": "Nam",
+    "specialist": "Khoa Ngoại",
+    "schedule": [
+      {
+        "date": "2023-12-13",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-14",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-15",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-16",
+        "clinic": "Phòng 12"
+      }
+    ]
+  },
+  {
+    "fullname": "Lê Thị D",
+    "title": "ThS",
+    "gender": "Nữ",
+    "specialist": "Khoa Nhi",
+    "schedule": [
+      {
+        "date": "2023-12-17",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-18",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-19",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-20",
+        "clinic": "Phòng 11"
+      }
+    ]
+  },
+  {
+    "fullname": "Hoàng Văn E",
+    "title": "CKI",
+    "gender": "Nam",
+    "specialist": "Khoa Nội",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 12"
+      }
+    ]
+  },
+  {
+    "fullname": "Nguyễn Thị F",
+    "title": "CKII",
+    "gender": "Nữ",
+    "specialist": "Khoa Ngoại",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 10"
+      }
+    ]
+  },
+  {
+    "fullname": "Trần Văn G",
+    "title": "ThS",
+    "gender": "Nam",
+    "specialist": "Khoa Nhi",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 11"
+      }
+    ]
+  },
+  {
+    "fullname": "Phạm Thị H",
+    "title": "CKI",
+    "gender": "Nữ",
+    "specialist": "Khoa Nội",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 10"
+      }
+    ]
+  },
+  {
+    "fullname": "Lê Văn I",
+    "title": "CKII",
+    "gender": "Nam",
+    "specialist": "Khoa Ngoại",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 12"
+      }
+    ]
+  },
+  {
+    "fullname": "Hoàng Thị J",
+    "title": "ThS",
+    "gender": "Nữ",
+    "specialist": "Khoa Nhi",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 11"
+      }
+    ]
+  },
+  {
+    "fullname": "Nguyễn Văn K",
+    "title": "CKI",
+    "gender": "Nam",
+    "specialist": "Khoa Nội",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 10"
+      }
+    ]
+  },
+  {
+    "fullname": "Trần Thị L",
+    "title": "CKII",
+    "gender": "Nữ",
+    "specialist": "Khoa Ngoại",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 12"
+      }
+    ]
+  },
+  {
+    "fullname": "Phạm Văn M",
+    "title": "ThS",
+    "gender": "Nam",
+    "specialist": "Khoa Nhi",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 12"
+      }
+    ]
+  },
+  {
+    "fullname": "Lê Thị N",
+    "title": "CKI",
+    "gender": "Nữ",
+    "specialist": "Khoa Nội",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 10"
+      }
+    ]
+  },
+  {
+    "fullname": "Hoàng Văn O",
+    "title": "CKII",
+    "gender": "Nam",
+    "specialist": "Khoa Ngoại",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 11"
+      }
+    ]
+  },
+  {
+    "fullname": "Nguyễn Thị P",
+    "title": "ThS",
+    "gender": "Nữ",
+    "specialist": "Khoa Nhi",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 11"
+      }
+    ]
+  },
+  {
+    "fullname": "Trần Văn Q",
+    "title": "CKI",
+    "gender": "Nam",
+    "specialist": "Khoa Nội",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 10"
+      }
+    ]
+  },
+  {
+    "fullname": "Phạm Thị R",
+    "title": "CKII",
+    "gender": "Nữ",
+    "specialist": "Khoa Ngoại",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 10"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 10"
+      }
+    ]
+  },
+  {
+    "fullname": "Lê Văn S",
+    "title": "ThS",
+    "gender": "Nam",
+    "specialist": "Khoa Nhi",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 12"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 12"
+      }
+    ]
+  },
+  {
+    "fullname": "Hoàng Thị T",
+    "title": "CKI",
+    "gender": "Nữ",
+    "specialist": "Khoa Nội",
+    "schedule": [
+      {
+        "date": "2023-12-05",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-06",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-07",
+        "clinic": "Phòng 11"
+      },
+      {
+        "date": "2023-12-08",
+        "clinic": "Phòng 11"
+      }
+    ]
+  }
+]
