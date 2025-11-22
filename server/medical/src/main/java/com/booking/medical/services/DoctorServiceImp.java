@@ -51,7 +51,7 @@ public class DoctorServiceImp implements DoctorService {
     }
 
     @Override
-    public List<ScheduleDTO> GetSchedule(String idDoctor) {
+    public List<ScheduleDTO> GetSchedule(Long idDoctor) {
         log.info("Fin by doctor id: {}", idDoctor);
         Doctor doctor = doctorRepository.findById(idDoctor).orElseThrow(() -> {
             throw new CustomException("Hệ thống không tìm thấy thông tin bác sĩ này", HttpStatus.NOT_FOUND);
@@ -65,7 +65,7 @@ public class DoctorServiceImp implements DoctorService {
         int nextMonthYear = nextMonth == 1 ? currentYear + 1 : currentYear;
 
         Calendar itemCal = Calendar.getInstance();
-        List<ScheduleDTO> schedulesDTO = doctor.getSchedule().stream().filter(item -> {
+        List<ScheduleDTO> schedulesDTO = doctor.getSchedules().stream().filter(item -> {
             itemCal.setTime(Date.from(item.getDate()));
 
             int itemDay = itemCal.get(Calendar.DAY_OF_MONTH);

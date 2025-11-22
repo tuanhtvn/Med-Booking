@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class RecordDTO {
     @JsonProperty("id")
-    private String id;
+    private Long id;
     @JsonProperty("fullname")
     private String fullName;
     @JsonProperty("birthday")

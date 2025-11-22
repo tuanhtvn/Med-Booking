@@ -36,7 +36,8 @@ public class TicketServiceImp implements TicketService {
     private ModelMapper modelMapper;
 
     @Override
-    public void Booking(String doctorID, String recordID, String scheduleID,
+    public void Booking(Long doctorID, Long recordID,
+            Long scheduleID,
             CreateTicketInputDTO createTicketInputDTO) {
         // check thông tin bệnh nhân
         User user = userService.GetUserWithAuthentication();

@@ -4,34 +4,52 @@ import com.booking.medical.common.BCryptConstants;
 import com.booking.medical.common.Gender;
 import com.booking.medical.common.Role;
 
-import java.time.Instant;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+
 import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-@Document(collection = "Users")
-@Data
+@Entity
 @Slf4j
+@Data
 public class User {
     @Id
-    private String id;
-    private String fullName;
-    @Indexed(unique = true)
-    private String email;
-    private String password;
-    private Role role = Role.USER;
-    private Gender gender;
-    private String birthday;
-    private Boolean isDeleted = false;
-    private VerifyCode verifyCode = new VerifyCode();
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
+    private String fullName;
+
+    private String email;
+
+    private String password;
+
+    private Role role = Role.USER;
+
+    private Gender gender;
+
+    private String birthday;
+
+    private Boolean isDeleted = false;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "verifycode_id", referencedColumnName = "id")
+    private VerifyCode verifyCode;
+
+    @OneToMany(mappedBy = "user")
     private List<Record> records;
+
+    @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
 
     public void setPassword(String password) {
@@ -50,25 +68,4 @@ public class User {
         return this.verifyCode.Verify(code);
     }
 
-    @Data
-    private class VerifyCode {
-        private String code;
-        private Instant expiredAt;
-
-        public void setCode(String code) {
-            this.code = BCrypt.hashpw(code, BCrypt.gensalt(BCryptConstants.ROUND));
-            this.expiredAt = Instant.now().plusSeconds(5 * 60);
-        }
-
-        public boolean Verify(String code) {
-            if (this.expiredAt.isBefore(Instant.now())) {
-                return false;
-            }
-            log.info(code);
-            log.info(this.code);
-            Boolean result = BCrypt.checkpw(code, this.code);
-            log.info(result.toString());
-            return BCrypt.checkpw(code, this.code);
-        }
-    }
 }

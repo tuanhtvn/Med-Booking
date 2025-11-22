@@ -8,12 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class EnvConfig {
-    @Value("${CONN_STRING}")
-    private String connString;
-
-    @Value("${DB_NAME}")
-    private String dbName;
-
     @Value("${JWT_EXPIRES_TIME}")
     private long jwtExpiresTime;
 
@@ -54,14 +48,6 @@ public class EnvConfig {
 
     public RSAPrivateKey getPrivateKey() {
         return privateKey;
-    }
-
-    public String getConnString() {
-        return connString;
-    }
-
-    public String getDbName() {
-        return dbName;
     }
 
     public long getJwtExpiresTime() {

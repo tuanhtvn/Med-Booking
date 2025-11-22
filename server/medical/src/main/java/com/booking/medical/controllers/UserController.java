@@ -79,7 +79,7 @@ public class UserController {
     }
 
     @PutMapping("/user/password/reset/{id}")
-    public ResponseEntity<Response> VerifyForgotPassword(@PathVariable("id") String id,
+    public ResponseEntity<Response> VerifyForgotPassword(@PathVariable("id") Long id,
             @RequestBody @Valid VerifyForgotPasswordDTO verifyForgotPassword) {
         if (!verifyForgotPassword.getPassword().equals(verifyForgotPassword.getConfirmPassword())) {
             throw new CustomException("Mật khẩu nhập lại không khớp", HttpStatus.BAD_REQUEST);

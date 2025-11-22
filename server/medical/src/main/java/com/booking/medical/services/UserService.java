@@ -18,7 +18,7 @@ public interface UserService {
 
     String ForgotPassword(ForgotPasswordDTO forgotPasswordDTO);
 
-    void VerifyForgotPassword(String id, VerifyForgotPasswordDTO verifyForgotPassword);
+    void VerifyForgotPassword(Long id, VerifyForgotPasswordDTO verifyForgotPassword);
 
     UserDTO UpdatePassword(UpdatePasswordDTO UpdatePasswordDTO);
 

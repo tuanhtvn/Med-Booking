@@ -71,7 +71,7 @@ public class DoctorSeeder implements Seeder {
                     schedule.setClinic(clinic);
                     schedule = scheduleRepository.save(schedule);
 
-                    doctor.getSchedule().add(schedule);
+                    doctor.getSchedules().add(schedule);
                 }
                 doctorRepository.save(doctor);
                 log.info("Create doctor: {} - Success", doctor.getFullName());

@@ -25,9 +25,9 @@ public class TicketController {
 
     @PostMapping("ticket/{doctorID}/{recordID}/{scheduleID}")
     public ResponseEntity<Response> Book(
-            @PathVariable("doctorID") String doctorID,
-            @PathVariable("recordID") String recordID,
-            @PathVariable("scheduleID") String scheduleID,
+            @PathVariable("doctorID") Long doctorID,
+            @PathVariable("recordID") Long recordID,
+            @PathVariable("scheduleID") Long scheduleID,
             @RequestBody @Valid CreateTicketInputDTO createTicketInputDTO) {
         ticketService.Booking(doctorID, recordID, scheduleID, createTicketInputDTO);
 

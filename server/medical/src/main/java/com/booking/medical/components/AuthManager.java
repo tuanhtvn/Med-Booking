@@ -9,9 +9,9 @@ import com.booking.medical.common.IAuthentication;
 public class AuthManager implements IAuthentication {
 
     @Override
-    public String getUserIDAuthentication() {
+    public Long getUserIDAuthentication() {
         String userID = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userID;
+        return Long.parseLong(userID);
     }
 
 }

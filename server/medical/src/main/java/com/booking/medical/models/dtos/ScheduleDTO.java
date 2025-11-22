@@ -10,7 +10,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ScheduleDTO {
     @JsonProperty("id")
-    private String id;
+    private Long id;
     @JsonProperty("date")
     @JsonFormat(pattern = "dd/MM/yyyy")
     private String date;

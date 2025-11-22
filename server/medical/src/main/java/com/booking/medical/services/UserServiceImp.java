@@ -3,7 +3,6 @@ package com.booking.medical.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,11 +98,11 @@ public class UserServiceImp implements UserService, RecordService {
                     HttpStatus.SERVICE_UNAVAILABLE);
         }
 
-        return user.getId();
+        return user.getId().toString();
     }
 
     @Override
-    public void VerifyForgotPassword(String id, VerifyForgotPasswordDTO verifyForgotPassword) {
+    public void VerifyForgotPassword(Long id, VerifyForgotPasswordDTO verifyForgotPassword) {
         User user = userRepository.findById(id).orElseThrow(() -> {
             throw new CustomException("Lỗi không tìm thấy người dùng này", HttpStatus.BAD_REQUEST);
         });
@@ -168,7 +167,6 @@ public class UserServiceImp implements UserService, RecordService {
         User user = this.GetUserWithAuthentication();
 
         Record record = modelMapper.map(createRecordInputDTO, Record.class);
-        record.setId(new ObjectId().toString());
 
         if (user.getRecords() == null) {
             user.setRecords(new ArrayList<>());
@@ -191,7 +189,7 @@ public class UserServiceImp implements UserService, RecordService {
 
     @Override
     public User GetUserWithAuthentication() {
-        String userID = authentication.getUserIDAuthentication();
+        Long userID = authentication.getUserIDAuthentication();
 
         User user = userRepository.findById(userID).orElseThrow(() -> {
             throw new CustomException("Không tìm thấy người dùng", HttpStatus.BAD_REQUEST);

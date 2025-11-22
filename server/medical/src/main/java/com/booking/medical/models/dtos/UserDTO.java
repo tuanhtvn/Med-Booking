@@ -11,7 +11,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO {
     @JsonProperty("id")
-    private String id;
+    private Long id;
 
     @JsonProperty("fullname")
     private String fullName;

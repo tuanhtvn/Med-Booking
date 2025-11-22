@@ -11,6 +11,6 @@ import com.booking.medical.models.dtos.ScheduleDTO;
 public interface DoctorService {
     Page<DoctorDTO> GetAllByKeyword(String keyword, Pageable pageable);
 
-    List<ScheduleDTO> GetSchedule(String idDoctor);
+    List<ScheduleDTO> GetSchedule(Long idDoctor);
 
 }

@@ -18,7 +18,7 @@ public class JwtToken {
     @Autowired
     JwtEncoder jwtEncoder;
 
-    public String getToken(String userId, String authorities) {
+    public String getToken(Long userId, String authorities) {
         Instant now = Instant.now();
         Instant expiresAt = now.plus(envConfig.getJwtExpiresTime(), ChronoUnit.DAYS);
 
@@ -26,7 +26,7 @@ public class JwtToken {
                 .issuer("self")
                 .issuedAt(now)
                 .expiresAt(expiresAt)
-                .subject(userId)
+                .subject(userId.toString())
                 .claim("authorities", authorities)
                 .build();
 

@@ -13,7 +13,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DoctorDTO {
     @JsonProperty("id")
-    private String id;
+    private Long id;
     @JsonProperty("fullname")
     private String fullName;
     @JsonProperty("title")

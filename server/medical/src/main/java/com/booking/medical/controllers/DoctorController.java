@@ -50,7 +50,7 @@ public class DoctorController {
     }
 
     @GetMapping("/doctors/scheduled/{id}")
-    public ResponseEntity<Response> GetScheduledDoctor(@PathVariable("id") String doctorID) {
+    public ResponseEntity<Response> GetScheduledDoctor(@PathVariable("id") Long doctorID) {
         List<ScheduleDTO> schedules = doctorService.GetSchedule(doctorID);
 
         resp.setMessage("Tải dữ liệu thành công");
