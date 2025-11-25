@@ -2,10 +2,16 @@
 include .env
 export
 
-# Run server spring boot application
-start-server:
+# Run server
+# Java Spring Boot application
+start-server-java:
 	cd server/medical && \
 	./mvnw spring-boot:run
+
+# FastAPI Python application
+start-server-python:
+	cd server/gemini/app &&\
+	uvicorn main:app --reload
 
 # Run client react application
 start-client:
