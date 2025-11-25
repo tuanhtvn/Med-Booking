@@ -10,6 +10,7 @@ import {
 import { doctorReducer, scheduledReducer } from "./reducers/doctorReducer";
 import { recordReducer } from "./reducers/recordReducer";
 import { ticketReducer, ticketsReducer } from "./reducers/ticketReducer";
+import { chatReducer } from "./reducers/chatReducer";
 const rootReducer = combineReducers({
   // reducers
   auth: authReducer,
@@ -22,6 +23,8 @@ const rootReducer = combineReducers({
   scheduled: scheduledReducer,
   ticket: ticketReducer,
   tickets: ticketsReducer,
+  //
+  chat: chatReducer,
 });
 
 const store = configureStore({

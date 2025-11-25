@@ -15,6 +15,8 @@ import ProtectedRoute from "./routes/protectedRoute";
 import List from "./components/records/list";
 import Booking from "./components/books/booking";
 import Ticket from "./components/tickets/ticket";
+import Chat from "./components/chats/chat";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -97,8 +99,11 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
       </div>
+      <Chat />
+      <ToastContainer />
       <Footer />
     </>
   );

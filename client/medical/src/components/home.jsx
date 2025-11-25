@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { useParams, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Loader from "./layouts/loader";
@@ -38,7 +38,7 @@ const Home = () => {
       return;
     }
     dispatch(getDoctors(keyword, currentPage));
-  }, [dispatch, toast, error, keyword, currentPage]);
+  }, [navigate, dispatch, error, keyword, currentPage]);
 
   function setCurrentPageNo(selectedPage) {
     setCurrentPage(selectedPage.selected);
@@ -82,7 +82,6 @@ const Home = () => {
               renderOnZeroPageCount={null}
             />
           </div>
-          <ToastContainer autoClose={2000} />
         </>
       )}
     </>
