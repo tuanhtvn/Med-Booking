@@ -1,6 +1,7 @@
 package com.booking.medical.models.entities;
 
 import java.time.Instant;
+import java.util.Random;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -28,6 +29,9 @@ public class VerifyCode {
     private User user;
 
     public void setCode(String code) {
+        if (code == null) {
+            return;
+        }
         this.code = BCrypt.hashpw(code, BCrypt.gensalt(BCryptConstants.ROUND));
         this.expiredAt = Instant.now().plusSeconds(5 * 60);
     }
@@ -41,5 +45,14 @@ public class VerifyCode {
         Boolean result = BCrypt.checkpw(code, this.code);
         log.info(result.toString());
         return BCrypt.checkpw(code, this.code);
+    }
+
+    public static String Get() {
+        String verifyCode = "";
+        Random random = new Random();
+        for (int i = 0; i < 6; i++) {
+            verifyCode += random.nextInt(10);
+        }
+        return verifyCode;
     }
 }

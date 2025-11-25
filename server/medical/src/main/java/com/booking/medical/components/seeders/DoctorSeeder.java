@@ -16,8 +16,6 @@ import com.booking.medical.common.Gender;
 import com.booking.medical.models.entities.Doctor;
 import com.booking.medical.models.entities.Schedule;
 import com.booking.medical.repositories.DoctorRepository;
-import com.booking.medical.repositories.ScheduleRepository;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -25,20 +23,13 @@ import lombok.extern.slf4j.Slf4j;
 public class DoctorSeeder implements Seeder {
     private final String localtion = "data/Doctor.json";
     private DoctorRepository doctorRepository;
-    private ScheduleRepository scheduleRepository;
 
-    public DoctorSeeder(DoctorRepository doctorRepository, ScheduleRepository scheduleRepository) {
+    public DoctorSeeder(DoctorRepository doctorRepository) {
         this.doctorRepository = doctorRepository;
-        this.scheduleRepository = scheduleRepository;
     }
 
     @Override
     public void seed() {
-
-        scheduleRepository.deleteAll();
-        log.info("Clear all schedule completed");
-        doctorRepository.deleteAll();
-        log.info("Clear all doctor info completed");
 
         JSONParser parser = new JSONParser();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -69,14 +60,14 @@ public class DoctorSeeder implements Seeder {
                     Schedule schedule = new Schedule();
                     schedule.setDate(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
                     schedule.setClinic(clinic);
-                    schedule = scheduleRepository.save(schedule);
-
+                    schedule.setDoctor(doctor);
                     doctor.getSchedules().add(schedule);
                 }
                 doctorRepository.save(doctor);
                 log.info("Create doctor: {} - Success", doctor.getFullName());
             }
         } catch (Exception e) {
+            log.error(e.getMessage());
             e.printStackTrace();
         }
     }

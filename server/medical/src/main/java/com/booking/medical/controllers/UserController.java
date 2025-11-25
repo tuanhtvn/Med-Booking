@@ -78,7 +78,7 @@ public class UserController {
         return ResponseEntity.status(resp.getStatus()).body(resp);
     }
 
-    @PutMapping("/user/password/reset/{id}")
+    @PutMapping("/auth/user/password/reset/{id}")
     public ResponseEntity<Response> VerifyForgotPassword(@PathVariable("id") Long id,
             @RequestBody @Valid VerifyForgotPasswordDTO verifyForgotPassword) {
         if (!verifyForgotPassword.getPassword().equals(verifyForgotPassword.getConfirmPassword())) {
@@ -91,13 +91,4 @@ public class UserController {
 
         return ResponseEntity.status(resp.getStatus()).body(resp);
     }
-
-    @GetMapping("/user/logout")
-    public ResponseEntity<Response> Logout() {
-
-        resp.setMessage("Bạn đã đăng xuất thành công");
-        resp.setStatus(HttpStatus.OK);
-        return ResponseEntity.status(resp.getStatus()).body(resp);
-    }
-
 }

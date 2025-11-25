@@ -56,16 +56,4 @@ public class User {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt(BCryptConstants.ROUND));
     }
 
-    public void setVerifyCode(String code) {
-        if (code == null) {
-            this.verifyCode.setCode(null);
-            return;
-        }
-        this.verifyCode.setCode(code);
-    }
-
-    public boolean Verify(String code) {
-        return this.verifyCode.Verify(code);
-    }
-
 }

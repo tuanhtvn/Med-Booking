@@ -2,6 +2,7 @@ package com.booking.medical.models.entities;
 
 import com.booking.medical.common.Gender;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +27,6 @@ public class Doctor {
     private Double price = 150.0;
     private Boolean isDeleted = false;
 
-    @OneToMany(mappedBy = "doctor")
-    private List<Schedule> schedules = new ArrayList<>();
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Schedule> schedules = new ArrayList<>();;
 }

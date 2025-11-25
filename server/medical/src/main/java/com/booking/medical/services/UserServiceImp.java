@@ -25,8 +25,8 @@ import com.booking.medical.models.dtos.UserDTO;
 import com.booking.medical.models.dtos.VerifyForgotPasswordDTO;
 import com.booking.medical.models.entities.Record;
 import com.booking.medical.models.entities.User;
+import com.booking.medical.models.entities.VerifyCode;
 import com.booking.medical.repositories.UserRepository;
-import com.booking.medical.utils.VerifyCode;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,7 +49,7 @@ public class UserServiceImp implements UserService, RecordService {
     public UserDTO RegisterUser(CreateUserInputDTO createUserInputDTO) {
         // Check email unique
         if (userRepository.findByEmail(createUserInputDTO.getEmail()).isPresent()) {
-            throw new CustomException("Địa chỉ email đã tồn tại", HttpStatus.BAD_REQUEST);
+            throw new CustomException("Email này đã được sử dụng", HttpStatus.BAD_REQUEST);
         }
         // Success then create user
         User user = modelMapper.map(createUserInputDTO, User.class);
@@ -68,7 +68,7 @@ public class UserServiceImp implements UserService, RecordService {
         // check password
         if (BCrypt.checkpw(loginInputDTO.getPassword(), user.getPassword())) {
             // return User if success
-            log.info("LOGIN - User by email: {} - SUCCESS", user);
+            log.info("LOGIN - User by email: {} - SUCCESS", user.getEmail());
             return modelMapper.map(user, UserDTO.class);
         }
         // throw Exception if fail
@@ -84,12 +84,16 @@ public class UserServiceImp implements UserService, RecordService {
             throw new CustomException("Địa chỉ email chưa đăng ký tài khoản trên hệ thống", HttpStatus.BAD_REQUEST);
         });
 
-        String codeVerify = VerifyCode.Get();
-        user.setVerifyCode(codeVerify);
+        String code = VerifyCode.Get();
+
+        VerifyCode verifyCode = new VerifyCode();
+        verifyCode.setCode(code);
+        user.setVerifyCode(verifyCode);
+
         userRepository.save(user);
 
         try {
-            emailService.SendVerifyCode(user.getEmail(), user.getFullName(), codeVerify);
+            emailService.SendVerifyCode(user.getEmail(), user.getFullName(), code);
         } catch (Exception e) {
             log.error("Send email fail: {}", e.getMessage());
             user.setVerifyCode(null);
@@ -107,7 +111,7 @@ public class UserServiceImp implements UserService, RecordService {
             throw new CustomException("Lỗi không tìm thấy người dùng này", HttpStatus.BAD_REQUEST);
         });
 
-        if (!user.Verify(verifyForgotPassword.getVerifycode())) {
+        if (!user.getVerifyCode().Verify(verifyForgotPassword.getVerifycode())) {
             log.info("Người dùng; {} nhập mã xác minh {} khôi phục mật khẩu không chính xác", user.getEmail(),
                     verifyForgotPassword.getVerifycode());
             throw new CustomException("Mã xác mình không chính xác Hoặc đã hết hạn", HttpStatus.BAD_REQUEST);

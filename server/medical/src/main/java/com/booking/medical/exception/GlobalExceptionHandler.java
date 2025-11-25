@@ -8,9 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.booking.medical.common.Response;
 
@@ -29,6 +31,7 @@ public class GlobalExceptionHandler {
         log.error("Exception: " + exception.getMessage());
 
         if (env.getActiveProfiles()[0].equals("dev")) {
+            log.error("Exception class: " + exception.getClass().getName());
             resp.setMessage(exception.getMessage());
         } else {
             resp.setMessage(
@@ -94,4 +97,15 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(resp.getStatus()).body(resp);
     }
+
+    // Not Found Error
+    @ExceptionHandler({ NoResourceFoundException.class, HttpRequestMethodNotSupportedException.class })
+    public ResponseEntity<Response> handleIOException(Exception e) {
+        log.error("Exception: " + e.getMessage());
+        resp.setStatus(HttpStatus.NOT_FOUND);
+        resp.setMessage("Không tìm thấy endpoint");
+
+        return ResponseEntity.status(resp.getStatus()).body(resp);
+    }
+
 }
