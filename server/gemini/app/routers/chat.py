@@ -6,12 +6,7 @@ from services import chat_service
 router = APIRouter(prefix="/chats", tags=["chats"])
 
 
-@router.post("/", response_model=ChatResponse)
+@router.post("", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
     text = await chat_service.chat(prompt=request)
     return ChatResponse(response=text)
-
-
-@router.get("/")
-async def test():
-    return {"status": 200}
