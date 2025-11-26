@@ -1,4 +1,4 @@
-FROM openjdk:21-oraclelinux8
+FROM eclipse-temurin:21-jdk-alpine
 
 WORKDIR /app
 COPY .mvn/ .mvn

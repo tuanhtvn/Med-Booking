@@ -2,28 +2,6 @@ version: "3.8"
 
 #SERVICES
 services:
-  # BACKEND
-  java-springboot:
-    environment:
-      - CLIENT_URL=${CLIENT_URL}
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
-      - DB_HOST=${DB_HOST}
-      - DB_APP_NAME=${DB_APP_NAME}
-      - DB_NAME=${DB_NAME}
-      - SEEDER=${SEEDER}
-      - MAIL_USERNAME=${MAIL_USERNAME}
-      - MAIL_PASSWORD=${MAIL_PASSWORD}
-      - JWT_EXPIRES_TIME=${JWT_EXPIRES_TIME}
-      - COOKIE_EXPIRES_TIME=${COOKIE_EXPIRES_TIME}
-      - SERVER_PORT=${SERVER_PORT}
-      - CLIENT_PORT=${CLIENT_PORT}
-      - CONN_STRING=${CONN_STRING}
-    container_name: Backend
-    build:
-      context: ./server/medical
-    volumes:
-      - ./server/medical:/app
   # FRONTEND
   nginx-frontend:
     container_name: Frontend
@@ -37,3 +15,63 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ./client/medical:/app
       - /app/node_modules
+
+  # BACKEND
+  # FastAPI Gemini Service
+  python-fastapi:
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    container_name: FastAPI-Backend
+    build:
+      context: ./server/gemini/app
+      dockerfile: ../Dockerfile
+    # ports:
+    #   - "8000:8000"
+    volumes:
+      - ./server/gemini/app:/app
+  # Spring Boot Application
+  java-springboot:
+    environment:
+      - CLIENT_URL=${CLIENT_URL}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - SEEDER=${SEEDER}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - JWT_EXPIRES_TIME=${JWT_EXPIRES_TIME}
+      - COOKIE_EXPIRES_TIME=${COOKIE_EXPIRES_TIME}
+      - SERVER_PORT=${SERVER_PORT}
+      - CLIENT_PORT=${CLIENT_PORT}
+      - APP_MODE=${APP_MODE}
+    container_name: Spring-Backend
+    build:
+      context: ./server/medical
+    depends_on:
+      - python-fastapi
+      - mysql-database
+    volumes:
+      - ./server/medical:/app
+
+    # Database
+  mysql-database:
+    image: mysql
+    container_name: mysql_db
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+
+    volumes:
+      - mysqldata:/var/lib/mysql
+
+    ports:
+      - "3306:3306"
+# VOLUMES
+volumes:
+  mysqldata:

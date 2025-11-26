@@ -21,4 +21,4 @@ start-client:
 build-app:
 	docker compose up -d
 
-.PHONY: start-server start-client build-app
+.PHONY: start-server-java start-server-python start-client build-app
