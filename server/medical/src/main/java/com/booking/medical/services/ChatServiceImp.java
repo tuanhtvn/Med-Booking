@@ -15,8 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class ChatServiceImp implements ChatService {
-    private String url = "http://localhost:8000"; // url nomal
-    // private String url = "http://python-fastapi:8000"; // url docker
+    // private String url = "http://localhost:8000"; // url nomal
+    private String url = "http://python-fastapi:8000"; // url docker
 
     @Override
     public Object SendMessage(ChatInputDTO chatInputDTO) {
